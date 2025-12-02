@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "CyberGuard Quick Scan",
+  "version": "1.0",
+  "description": "Scan current page or a link using CyberGuard backend.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CyberGuard Scan"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

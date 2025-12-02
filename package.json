@@ -1,0 +1,37 @@
+{
+  "name": "cyberguard",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000C\u0000y\u0000b\u0000e\u0000r\u0000G\u0000u\u0000a\u0000r\u0000d\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanjivani001/CyberGuard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sanjivani001/CyberGuard/issues"
+  },
+  "homepage": "https://github.com/Sanjivani001/CyberGuard#readme",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.2",
+    "json2csv": "^6.0.0-alpha.2",
+    "mongoose": "^9.0.0",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "type": "commonjs"
+}

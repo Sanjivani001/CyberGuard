@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>CyberGuard - Scanner</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CyberGuard</h1>
+    <p>Automatic background scan is running for configured monitored URLs. Use manual check below to scan any link.</p>
+
+    <form id="checkForm">
+      <input id="urlInput" placeholder="Enter URL to check (optional)" />
+      <button type="submit">Check Link</button>
+    </form>
+
+    <div id="result"></div>
+
+    <p><a href="/dashboard">View Dashboard</a></p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
