@@ -1,14 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "CyberGuard Quick Scan",
+  "name": "CyberGuard Auto Scanner",
   "version": "1.0",
-  "description": "Scan current page or a link using CyberGuard backend.",
-  "permissions": ["activeTab", "scripting"],
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "CyberGuard Scan"
-  },
-  "host_permissions": [
-    "<all_urls>"
-  ]
+  "description": "Scan open tabs, report risk to backend.",
+  "permissions": ["tabs", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html" }
 }

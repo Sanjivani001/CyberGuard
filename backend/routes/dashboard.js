@@ -13,5 +13,21 @@ router.get('/export-json', async (req, res) => {
   res.json(alerts);
 });
 
-module.exports = router;
+// API: recent alerts for frontend
+router.get('/api/recent-alerts', async (req, res) => {
+  try {
+    const alerts = await Alert.find().sort({ createdAt: -1 }).limit(100);
+    res.json(alerts.map(a => ({
+      target: a.target,
+      riskScore: a.riskScore,
+      flagged: a.flagged,
+      createdAt: a.createdAt,
+      solution: a.solution || ''
+    })));
+  } catch (e) {
+    console.error('recent-alerts error', e.message || e);
+    res.status(500).json([]);
+  }
+});
 
+module.exports = router;

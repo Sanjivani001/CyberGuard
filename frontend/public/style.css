@@ -1,13 +1,66 @@
-body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; padding:20px; }
-.container { max-width:900px; margin: auto; background: #fff; padding:20px; border-radius:6px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-h1 { text-align:center;}
-form { display:flex; gap:8px; justify-content:center; margin-bottom:16px;}
-input { padding:10px; width:60%; border:1px solid #ccc; border-radius:4px;}
-button { padding:10px 16px; border:none; background:#1976d2;color:#fff;border-radius:4px; cursor:pointer;}
-table { width:100%; border-collapse:collapse; margin-top:12px;}
-th,td { padding:10px; border:1px solid #e6e6e6; text-align:center; }
-th { background:#1976d2; color:#fff;}
-#result { margin-top: 12px; }
-.alert { padding:10px; border-radius:4px; margin-top:8px; }
-.alert.warn { background:#fff3cd; color:#856404; }
-.alert.ok { background:#d4edda; color:#155724; }
+body { 
+    font-family: Arial, sans-serif; 
+    background:#f4f6f8; 
+    margin:0;
+    padding:20px; }
+.container { 
+    max-width:900px;
+     margin:auto;
+      background:#fff; 
+      padding:20px; 
+      border-radius:6px;
+       box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+h1 { 
+    text-align:center;
+}
+form { 
+    display:flex; 
+    gap:8px; 
+    justify-content:center; 
+    margin-bottom:16px;
+}
+input { 
+    padding:10px;
+     width:60%; 
+     border:1px solid #ccc; 
+     border-radius:4px;
+    }
+button {
+     padding:10px 16px;
+      border:none; 
+      background:#1976d2;
+      color:#fff;
+      border-radius:4px; 
+      cursor:pointer;
+    }
+table {
+     width:100%;
+      border-collapse:collapse; 
+      margin-top:12px;
+    }
+th,td {
+     padding:10px; 
+     border:1px solid #e6e6e6; 
+     text-align:center;
+     }
+th { 
+    background:#1976d2;
+     color:#fff;
+    }
+.alert { 
+    padding:10px; 
+    border-radius:4px; 
+    margin-top:8px;
+}
+.alert.warn {
+     background:#fff3cd; 
+     color:#856404;
+     }
+.alert.ok {
+     background:#d4edda;
+      color:#155724;
+     }
+.scan-row { 
+    padding:8px; 
+    border-bottom:1px solid #eee; 
+}
