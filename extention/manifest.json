@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "CyberGuard Auto Scanner",
+  "version": "1.0",
+  "description": "Scan open tabs, report risk to backend or scan locally.",
+  "permissions": ["tabs", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html" }
+}

@@ -103,6 +103,8 @@ mongoose.connect(process.env.MONGO_URI, {
 })
   .then(() => {
     console.log('MongoDB connected');
+    // mark DB as connected for route handlers that check global.DB_CONNECTED
+    global.DB_CONNECTED = true;
     // only now we start auto-monitoring
     startAutoMonitoring();
 

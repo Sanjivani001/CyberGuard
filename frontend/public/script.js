@@ -33,7 +33,7 @@ async function refreshTabs() {
 
     if (!result.success) {
       console.error('Failed to fetch tabs:', result.error);
-      alert('Failed to refresh tabs');
+      setStatus('tabsStatus', 'Failed to fetch tabs: ' + (result.error || 'unknown'), true);
       return;
     }
 
@@ -49,26 +49,28 @@ async function refreshTabs() {
 
     if (tabs.length === 0) {
       tabsTbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 10px;">No open tabs reported yet</td></tr>';
+      setStatus('tabsStatus', 'No open tabs reported');
       return;
     }
 
     tabs.forEach((tab, index) => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${tab.url || 'Unknown'}</td>
         <td>${tab.title || 'No title'}</td>
+        <td style="max-width:560px; word-break:break-all;">${tab.url || 'Unknown'}</td>
         <td style="text-align: center;">
           <span style="background-color: ${getThreatColor(tab.riskScore || 0)}; color: white; padding: 5px 10px; border-radius: 3px;">
-            ${tab.riskScore ? tab.riskScore : '-'}
+            ${typeof tab.riskScore === 'number' ? tab.riskScore : '-'}
           </span>
         </td>
       `;
       tabsTbody.appendChild(row);
     });
+    setStatus('tabsStatus', 'Last updated: ' + new Date().toLocaleTimeString());
 
   } catch (err) {
     console.error('Error refreshing tabs:', err);
-    alert('Error refreshing tabs: ' + err.message);
+    setStatus('tabsStatus', 'Error refreshing tabs: ' + (err && err.message ? err.message : String(err)), true);
   }
 }
 
@@ -86,17 +88,17 @@ async function clearTabs() {
 
     if (!result.success) {
       console.error('Failed to clear tabs:', result.error);
-      alert('Failed to clear tabs');
+      setStatus('tabsStatus', 'Failed to clear tabs: ' + (result.error || 'unknown'), true);
       return;
     }
 
     console.log(`Cleared ${result.data.deleted} tabs`);
     await refreshTabs();
-    alert(`Cleared ${result.data.deleted} tabs`);
+    setStatus('tabsStatus', `Cleared ${result.data.deleted} tabs`);
 
   } catch (err) {
     console.error('Error clearing tabs:', err);
-    alert('Error clearing tabs: ' + err.message);
+    setStatus('tabsStatus', 'Error clearing tabs: ' + (err && err.message ? err.message : String(err)), true);
   }
 }
 
@@ -110,7 +112,7 @@ async function refreshHistory() {
 
     if (!result.success) {
       console.error('Failed to fetch history:', result.error);
-      alert('Failed to refresh history');
+      setStatus('historyStatus', 'Failed to fetch history: ' + (result.error || 'unknown'), true);
       return;
     }
 
@@ -126,6 +128,7 @@ async function refreshHistory() {
 
     if (history.length === 0) {
       scansTbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 10px;">No scan history yet</td></tr>';
+      setStatus('historyStatus', 'No scan history yet');
       return;
     }
 
@@ -144,10 +147,11 @@ async function refreshHistory() {
       `;
       scansTbody.appendChild(row);
     });
+    setStatus('historyStatus', 'Last updated: ' + new Date().toLocaleTimeString());
 
   } catch (err) {
     console.error('Error refreshing history:', err);
-    alert('Error refreshing history: ' + err.message);
+    setStatus('historyStatus', 'Error refreshing history: ' + (err && err.message ? err.message : String(err)), true);
   }
 }
 
@@ -165,17 +169,17 @@ async function clearHistory() {
 
     if (!result.success) {
       console.error('Failed to clear history:', result.error);
-      alert('Failed to clear history');
+      setStatus('historyStatus', 'Failed to clear history: ' + (result.error || 'unknown'), true);
       return;
     }
 
     console.log(`Cleared ${result.data.deleted} history records`);
     await refreshHistory();
-    alert(`Cleared ${result.data.deleted} scan records`);
+    setStatus('historyStatus', `Cleared ${result.data.deleted} scan records`);
 
   } catch (err) {
     console.error('Error clearing history:', err);
-    alert('Error clearing history: ' + err.message);
+    setStatus('historyStatus', 'Error clearing history: ' + (err && err.message ? err.message : String(err)), true);
   }
 }
 
@@ -183,28 +187,52 @@ async function clearHistory() {
 // EVENT LISTENERS
 // ============================================================
 
-// Refresh Tabs Display button
-const refreshTabsBtn = document.getElementById('refreshTabsDisplayBtn');
-if (refreshTabsBtn) {
-  refreshTabsBtn.addEventListener('click', refreshTabs);
-}
-
 // Clear Tabs Display button
 const clearTabsBtn = document.getElementById('clearTabsDisplayBtn');
 if (clearTabsBtn) {
   clearTabsBtn.addEventListener('click', clearTabs);
 }
-
-// Refresh Scan History button
-const refreshHistoryBtn = document.getElementById('refreshDisplayBtn');
-if (refreshHistoryBtn) {
-  refreshHistoryBtn.addEventListener('click', refreshHistory);
-}
-
 // Clear Scan History button
 const clearHistoryBtn = document.getElementById('clearDisplayBtn');
 if (clearHistoryBtn) {
   clearHistoryBtn.addEventListener('click', clearHistory);
+}
+
+// ============================================================
+// STATUS HELPERS
+// ============================================================
+
+function setStatus(id, msg, isError = false) {
+  try {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerText = msg;
+    el.style.color = isError ? '#f28b82' : 'var(--muted)';
+  } catch (e) {
+    console.error('setStatus error', e);
+  }
+}
+
+function clearStatus(id) {
+  try { const el = document.getElementById(id); if (el) el.innerText = ''; } catch(e){}
+}
+
+// ============================================================
+// AUTO-REFRESH
+// ============================================================
+
+// Auto-refresh tabs and history every 5 seconds
+let autoRefreshInterval = null;
+
+function startAutoRefresh() {
+  if (autoRefreshInterval) return;
+  console.log('[autoRefresh] Starting auto-refresh (5s interval)...');
+  refreshTabs();
+  refreshHistory();
+  autoRefreshInterval = setInterval(() => {
+    refreshTabs();
+    refreshHistory();
+  }, 5000);
 }
 
 // ============================================================
@@ -214,6 +242,5 @@ if (clearHistoryBtn) {
 // Load initial data when page loads
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Page loaded, initializing...');
-  refreshTabs();
-  refreshHistory();
+  startAutoRefresh();
 });
