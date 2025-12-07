@@ -10,34 +10,81 @@
       --ok:#4caf50; --warn:#ff9800; --danger:#f44336;
     }
     *{box-sizing:border-box;}
-    body{font-family:Inter, Arial, sans-serif; margin:0; padding:16px; background:linear-gradient(180deg,#071021 0%, #0f1720 100%); color:#e6eef6; min-height:100vh;}
-    .wrap{max-width:1200px; margin:0 auto; background:rgba(255,255,255,0.02); padding:16px; border-radius:10px; box-shadow:0 6px 30px rgba(2,6,23,0.6);}
+    body{
+      font-family:Inter, Arial, sans-serif; 
+      margin:0; padding:16px; 
+      background:linear-gradient(180deg,#071021 0%, #0f1720 100%); 
+      color:#e6eef6; 
+      min-height:100vh;
+    }
+    .wrap{
+      max-width:1200px; margin:0 auto; 
+      background:rgba(255,255,255,0.02); 
+      padding:16px; border-radius:10px; 
+      box-shadow:0 6px 30px rgba(2,6,23,0.6);
+    }
     h1{margin:0 0 8px; text-align:center; font-size:clamp(18px, 5vw, 28px);}
     form{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:16px;}
-    input[type=text]{padding:10px 12px; flex:1; min-width:250px; max-width:520px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:inherit; font-size:14px;}
-    button{padding:10px 14px; border-radius:6px; border:none; background:var(--accent); color:#fff; cursor:pointer; font-size:14px; white-space:nowrap; transition:all 0.2s;}
+    input[type=text]{
+      padding:10px 12px; flex:1; min-width:250px; max-width:520px; 
+      border-radius:6px; 
+      border:1px solid rgba(255,255,255,0.06); 
+      background:transparent; color:inherit; font-size:14px;
+    }
+    button{
+      padding:10px 14px; border-radius:6px; border:none; 
+      background:var(--accent); color:#fff; 
+      cursor:pointer; font-size:14px; 
+      white-space:nowrap; transition:all 0.2s;
+    }
     button:hover{opacity:0.9; transform:scale(1.02);}
     button:active{transform:scale(0.98);}
     .note{color:var(--muted); text-align:center; margin-bottom:12px; font-size:13px;}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:8px; margin-bottom:12px;}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); 
+      padding:12px; border-radius:8px; margin-bottom:12px;
+    }
     .manual{margin-bottom:0;}
+
     .flex-row{display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
     .flex-col{flex:1; min-width:280px;}
     h3{margin-top:0; margin-bottom:10px; font-size:16px;}
+
     table{width:100%; border-collapse:collapse; font-size:13px;}
-    th, td{padding:8px; border-bottom:1px solid rgba(255,255,255,0.03); text-align:left;}
+    th, td{
+      padding:8px; border-bottom:1px solid rgba(255,255,255,0.03); 
+      text-align:left; vertical-align:middle;
+    }
     th{color:var(--muted); font-weight:600; font-size:12px;}
     td{word-break:break-word; overflow-wrap:break-word;}
-    .score{font-weight:700; padding:4px 8px; border-radius:4px; display:inline-block; font-size:12px;}
+
+    .score{
+      font-weight:700; padding:4px 8px; border-radius:4px; 
+      display:inline-block; font-size:12px;
+    }
     .low{background:rgba(76,175,80,0.12); color:var(--ok);}
     .med{background:rgba(255,152,0,0.12); color:var(--warn);}
     .high{background:rgba(244,67,54,0.12); color:var(--danger);}
     .small{font-size:12px; color:var(--muted);}
+
     #recentList{max-height:400px; overflow-y:auto;}
     #tabsList{max-height:300px; overflow-y:auto;}
+
+    /* Buttons row */
     .btn-row{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;}
     .btn-row button{flex:1; min-width:90px; padding:8px 10px; font-size:12px;}
+
     .status-text{font-size:11px; color:var(--muted); margin-top:4px; font-weight:500;}
+
+    /* Fixing column sizes */
+    #recentList table th:nth-child(1){width:35%;}
+    #recentList table th:nth-child(2){width:15%;}
+    #recentList table th:nth-child(3){width:15%; text-align:center;}
+    #recentList table th:nth-child(4){width:35%;}
+
+    #recentList table td:nth-child(4){white-space:nowrap;}
+
     @media (max-width:768px) {
       body{padding:10px;}
       .wrap{padding:10px;}
@@ -52,6 +99,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <h1>🔒 CyberGuard — URL Scanner</h1>
@@ -62,8 +110,8 @@
       <button type="submit">Check Link</button>
     </form>
 
-    <!-- Flex layout: Manual Scan Result (left) + Open Tabs (right) -->
-    <div class="flex-row">
+    
+
       <!-- LEFT: Manual Scan Result -->
       <div class="flex-col">
         <h3>Manual Scan Result</h3>
@@ -95,7 +143,9 @@
         </div>
         <div id="tabsList" class="card">
           <table>
-            <thead><tr><th>Title</th><th>URL</th><th style="text-align:center;">Risk</th></tr></thead>
+            <thead>
+              <tr><th>Title</th><th>URL</th><th style="text-align:center;">Risk</th></tr>
+            </thead>
             <tbody id="tabsTbody">
               <tr><td colspan="3" class="small">No open tabs reported yet. Install the extension and click "Scan All Open Tabs".</td></tr>
             </tbody>
@@ -103,34 +153,50 @@
         </div>
         <div id="tabsStatus" class="status-text">🔄 Auto-refreshing every 5 seconds</div>
       </div>
-    </div>
+    
 
-    <!-- Full-width: Recent Scans History -->
+    <!-- Recent Scans History -->
     <h3 style="margin-top:16px; margin-bottom:10px;">Recent Scans History</h3>
+
     <div class="btn-row">
       <button id="clearDisplayBtn">Clear Display</button>
     </div>
-    <div id="historyStatus" class="status-text" style="margin-bottom:10px;">(Clears on-screen only — data remains in DB) 🔄 Auto-refreshing every 5 seconds</div>
+
+    <div id="historyStatus" class="status-text" style="margin-bottom:10px;">
+      (Clears on-screen only — data remains in DB) 🔄 Auto-refreshing every 5 seconds
+    </div>
+
     <div id="recentList" class="card">
       <table>
         <thead>
-          <tr><th>URL</th><th style="text-align:center;">Risk</th><th>Scanned at</th></tr>
+          <tr>
+            <th>URL</th>
+            <th>Type</th>
+            <th style="text-align:center;">Risk</th>
+            <th>Scanned at</th>
+          </tr>
         </thead>
+
         <tbody id="scansTbody">
           <% if (Array.isArray(scans) && scans.length) { %>
             <% scans.forEach(s => { %>
               <tr>
-                <td style="word-break:break-all;"><%= s.target || s.url || '' %></td>
+                <td style="word-break:break-word;"><%= s.target || s.url || '' %></td>
+                <td class="small"><%= s.type || 'URL' %></td>
+
                 <td style="text-align:center;">
                   <span class="score <%= s.riskScore < 30 ? 'low' : (s.riskScore < 70 ? 'med' : 'high') %>">
                     <%= s.riskScore %>
                   </span>
                 </td>
-                <td class="small"><%= new Date(s.createdAt || s.updatedAt || Date.now()).toLocaleString() %></td>
+
+                <td class="small" style="white-space:nowrap;">
+                  <%= new Date(s.createdAt || s.updatedAt || Date.now()).toLocaleString() %>
+                </td>
               </tr>
             <% }) %>
           <% } else { %>
-            <tr><td colspan="3" class="small">No scans yet.</td></tr>
+            <tr><td colspan="4" class="small">No scans yet.</td></tr>
           <% } %>
         </tbody>
       </table>
